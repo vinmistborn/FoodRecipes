@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAccess.Data;
+using DataAccess.Entites;
+using FoodRecipes.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,79 +13,127 @@ namespace FoodRecipes.Controllers
 {
     public class RecipeController : Controller
     {
-        // GET: RecipeController
-        public ActionResult Index()
+        private readonly IRecipeData _dataAccess;
+
+        public RecipeController(IRecipeData dataAccess)
         {
-            return View();
+            _dataAccess = dataAccess;
         }
 
-        // GET: RecipeController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult<Recipe>> Index()
         {
-            return View();
+            var recipes = await _dataAccess.GetAll();
+            return View(recipes);
         }
 
-        // GET: RecipeController/Create
+        public async Task<ActionResult> Details(int id)
+        {
+            var recipe = await _dataAccess.Get(id);
+            return View(recipe);
+        }
+
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: RecipeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(RecipeViewModel model)
         {
             try
             {
+                byte[] photoBytes = ConvertFileToByteArray(model.Photo);
+
+                var recipe = new Recipe
+                {
+                    Name = model.Name,
+                    Instructions = model.Instructions,
+                    Photo = photoBytes
+                };
+
+                await _dataAccess.Insert(recipe);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                ModelState.AddModelError("", e.Message);
                 return View();
             }
         }
 
-        // GET: RecipeController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult<RecipeViewModel>> Edit(int id)
         {
-            return View();
+            var recipe = await _dataAccess.Get(id);
+
+            var model = new RecipeViewModel
+            {
+                RecipeId = recipe.RecipeId,
+                Name = recipe.Name,
+                Instructions = recipe.Instructions
+            };
+
+            return View(model);
         }
 
-        // POST: RecipeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(RecipeViewModel model)
         {
             try
             {
+                byte[] photoBytes = ConvertFileToByteArray(model.Photo);
+
+                var recipe = new Recipe
+                {
+                    RecipeId = model.RecipeId,
+                    Name = model.Name,
+                    Instructions = model.Instructions,
+                    Photo = photoBytes
+                };
+
+                await _dataAccess.Update(recipe);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ModelState.AddModelError("", e.Message);
+                return View(model);
             }
         }
 
-        // GET: RecipeController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> ShowImage(int? id)
         {
-            return View();
+            if (id.HasValue)
+            {
+                var item = await _dataAccess.Get(id ?? -1);
+                if (item?.Photo != null)
+                {
+                    return File(
+                        item.Photo,
+                        "image/jpeg",
+                        $"recipe_{id}.jpg");
+                }
+            }
+
+            return NotFound();
         }
 
-        // POST: RecipeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public byte[] ConvertFileToByteArray(IFormFile photo)
         {
-            try
+            byte[] photoBytes = null;
+            if (photo != null)
             {
-                return RedirectToAction(nameof(Index));
+                using (var memory = new MemoryStream())
+                {
+                    photo.CopyTo(memory);
+                    photoBytes = memory.ToArray();
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return photoBytes;
         }
     }
 }

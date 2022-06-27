@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[sp_Recipe_Get]
-	@id int
+	@RecipeId int
 AS
 BEGIN
 	SELECT *
 	FROM Recipe
-	WHERE RecipeId = @id
+	WHERE RecipeId = @RecipeId
 END

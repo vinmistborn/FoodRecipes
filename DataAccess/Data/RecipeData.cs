@@ -22,9 +22,9 @@ namespace DataAccess.Data
             return await _dataAccess.LoadData<Recipe, dynamic>("sp_Recipe_GetAll", new { });
         }
 
-        public async Task<Recipe> Get(int id)
+        public async Task<Recipe> Get(int recipeId)
         {
-            var recipe = await _dataAccess.LoadData<Recipe, dynamic>("sp_Recipe_Get", new { id });
+            var recipe = await _dataAccess.LoadData<Recipe, dynamic>("sp_Recipe_Get", new { recipeId });
             return recipe.FirstOrDefault();
         }
 

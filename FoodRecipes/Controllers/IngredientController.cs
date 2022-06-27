@@ -41,15 +41,13 @@ namespace FoodRecipes.Controllers
             }
             return View(ingredient);
         }
-
-        // GET: IngredientController/Edit/5
+               
         public async Task<ActionResult<Ingredient>> Edit(int id)
         {
             var ingredient = await _dataAccess.Get(id);
             return View(ingredient);
         }
 
-        // POST: IngredientController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Ingredient ingredient)
@@ -63,14 +61,12 @@ namespace FoodRecipes.Controllers
             return View(ingredient);            
         }
 
-        // GET: IngredientController/Delete/5
         public async Task<ActionResult<Ingredient>> Delete(int id)
         {
             var ingredient = await _dataAccess.Get(id);
             return View(ingredient);
         }
 
-        // POST: IngredientController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection collection)
