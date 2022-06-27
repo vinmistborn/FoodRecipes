@@ -1,3 +1,5 @@
+using DataAccess.Data;
+using DataAccess.DbAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +26,10 @@ namespace FoodRecipes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<ISQLServerDataAccess, SQLServerDataAccess>();
+            services.AddScoped<IRecipeData, RecipeData>();
+            services.AddScoped<IIngredientData, IngredientData>();
+            services.AddScoped<IRecipeIngredientsData, RecipeIngredientsData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
