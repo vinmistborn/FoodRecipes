@@ -1,4 +1,4 @@
-﻿namespace FoodRecipes.Models
+﻿namespace DataAccess.Entites
 {
     public class RecipeIngredients
     {

@@ -57,13 +57,32 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
+    <Folder Include="dbo\StoredProcedures" />
+    <Folder Include="dbo\StoredProcedures\Ingredient" />
+    <Folder Include="dbo\StoredProcedures\Recipe" />
+    <Folder Include="dbo\StoredProcedures\RecipeIngredients" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Recipe.sql" />
     <Build Include="dbo\Ingredient.sql" />
     <Build Include="dbo\RecipeIngredients.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Update.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\Recipe\sp_Recipe_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\Recipe\sp_Recipe_Get.sql" />
+    <Build Include="dbo\StoredProcedures\Recipe\sp_Recipe_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\Recipe\sp_Recipe_Update.sql" />
+    <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredients_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredients_Get.sql" />
+    <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredient_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredient_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipesDB.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RecipesDB.publish.xml" />
   </ItemGroup>
 </Project>
