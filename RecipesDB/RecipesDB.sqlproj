@@ -78,6 +78,7 @@
     <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredients_Get.sql" />
     <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredient_Insert.sql" />
     <Build Include="dbo\StoredProcedures\RecipeIngredients\sp_RecipeIngredient_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Get.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipesDB.refactorlog" />

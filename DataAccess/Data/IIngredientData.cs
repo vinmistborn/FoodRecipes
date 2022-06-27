@@ -8,6 +8,7 @@ namespace DataAccess.Data
     {
         Task Delete(int id);
         Task<IEnumerable<Ingredient>> GetAll();
+        Task<Ingredient> Get(int id);
         Task Insert(Ingredient ingredient);
         Task Update(Ingredient ingredient);
     }

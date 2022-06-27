@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[sp_Ingredient_Delete]
-	@id int
+	@IngredientId int
 AS
 BEGIN
 	delete Ingredient
-	where IngredientId = @id
+	where IngredientId = @IngredientId
 END
 

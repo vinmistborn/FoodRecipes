@@ -2,6 +2,7 @@
 using DataAccess.Entites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DataAccess.Data
 {
@@ -32,6 +33,12 @@ namespace DataAccess.Data
         public async Task Delete(int id)
         {
             await _dataAccess.SaveData("sp_Ingredient_Delete", new { IngredientId = id });
+        }
+
+        public async Task<Ingredient> Get(int id)
+        {
+            var ingredient = await _dataAccess.LoadData<Ingredient, dynamic>("sp_Ingredient_Get", new { id });
+            return ingredient.FirstOrDefault();
         }
     }
 }
